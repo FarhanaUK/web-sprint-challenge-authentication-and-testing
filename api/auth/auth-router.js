@@ -1,6 +1,14 @@
 const router = require('express').Router();
+const { checkUserNameExists,
+  validateRequestBody,
+  hashPassword } = require('./auth-middleware')
 
-router.post('/register', (req, res) => {
+const Users = require('./auth-model')
+
+router.post('/register',
+  checkUserNameExists,
+  validateRequestBody,
+  hashPassword,  (req, res) => {
   res.end('implement register, please!');
   /*
     IMPLEMENT

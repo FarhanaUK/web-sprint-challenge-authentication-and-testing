@@ -1,5 +1,15 @@
+const { JWT_SECRET } = require('../secrets/index')
+
+
+
 module.exports = (req, res, next) => {
-  next();
+
+  const token = req.headers.authorization
+if(!token) {
+return next({status: 402, message: "token required"})
+}
+
+
   /*
     IMPLEMENT
 
@@ -11,4 +21,5 @@ module.exports = (req, res, next) => {
     3- On invalid or expired token in the Authorization header,
       the response body should include a string exactly as follows: "token invalid".
   */
+
 };
