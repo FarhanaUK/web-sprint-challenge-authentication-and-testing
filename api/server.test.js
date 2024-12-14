@@ -5,8 +5,8 @@ const db = require('../data/dbConfig')
 const bcrypt = require('bcryptjs')
 
 beforeAll(async () => {
-  await db('users').truncate();
-  await request(server).post('/api/auth/register').send({ username: 'bob', password: '1234' });
+  await db.migrate.rollback();
+  await db.migrate.latest();
 });
 
 afterAll(async () => {
