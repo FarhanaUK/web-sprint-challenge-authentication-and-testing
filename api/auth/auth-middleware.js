@@ -1,6 +1,23 @@
 const Users = require('./auth-model')
 const bcrypt = require('bcryptjs')
 
+async function validateUser(req, res, next) {
+  try {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      next({ status: 400, message: "username and password required" });
+    }
+    const user = await Users.findBy({username})
+    if(user.length === 0 )
+        return next({status: 401, message: "Invalid Credentials"})
+    req.user = user[0]
+    next();
+  } catch (err) {
+    next(err);
+  }
+}
+
 
 async function checkUserNameExists(req, res, next) {
   try {
@@ -48,23 +65,6 @@ console.log("Hashed password: ", hash);
     .catch(next);  
 };
 
-
-async function validateUser(req, res, next) {
-  try {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-      next({ status: 400, message: "username and password required" });
-    }
-    const user = await Users.findBy({username})
-    if(user.length === 0 )
-        return next({status: 401, message: "Invalid Credentials"})
-    req.user = user[0]
-    next();
-  } catch (err) {
-    next(err);
-  }
-}
 
 
  /*

@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../secrets')
 const bcrypt = require('bcryptjs')
 
-router.post('/register', checkUserNameExists, validateRequestBody,
+router.post('/register', validateRequestBody, checkUserNameExists, 
   hashPassword, (req, res) => {
     const { id, username, password } = req.user; 
    res.status(201).json({
